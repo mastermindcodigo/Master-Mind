@@ -57,6 +57,7 @@ int error;
 int dificultad;
 int *lives;
 int x=100;
+lives=&x;
 
 #define JUGAR '1'
 #define PROBAR '2'
@@ -90,13 +91,13 @@ fprintf(stdout," 1) Jugar partida \n 2) Jugar partida de prueba \n 3) Establecer
   case JUGAR : {
     fprintf(stdout," \nHas seleccionado Jugar partida\n\n");
     dificultad=0;
-    jugar_partida(dificultad); //MODO NORMAL DE JUEGO
+    jugar_partida(dificultad, lives); //MODO NORMAL DE JUEGO
     break;
   }
   case PROBAR: {
     fprintf(stdout," \nHas seleccionado Jugar partida de prueba\n\n");
     dificultad=1;
-    jugar_partida(dificultad);
+   // jugar_partida(dificultad);
     break;
   }
   case NIVEL: {
@@ -104,7 +105,7 @@ fprintf(stdout," 1) Jugar partida \n 2) Jugar partida de prueba \n 3) Establecer
     error=1;
     lives=&x;
 	printf("%i",*lives);
-    establecer_nivel(error, lives);
+    establecer_nivel(error, lives); //MODIFICAMOS EL NUMERO DE OPORTUNIDADES Y VOLVEMOS A LANZAR EL MENU DE OPCIONES
     
     break;
   }

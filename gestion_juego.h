@@ -5,14 +5,13 @@
 #include <ctype.h>
 #include "jugar_partida_normal.h"
 
-int jugar_partida(int modo){
+int jugar_partida(int modo, int *lifes){
 
  int establecer_nivel(); //PROTOTIPO
 
   if(modo==0){ //MODO NORMAL DE JUEGO
 	
-  int error=0;
-  int oportunidades=establecer_nivel(error);
+  int oportunidades=*lifes;
   printf("Se va a jugar una partida en dificultad normal\n");
   partida_normal(oportunidades);
   return 0;
@@ -26,7 +25,6 @@ int jugar_partida(int modo){
 
 int establecer_nivel(int error, int *lifes){
 
-  int vidas=*lifes;
   int modo=error;
   while(modo==1){
   printf("Nivel actual: 100\nElige nuevo nivel [1..100]:");
@@ -40,7 +38,7 @@ int establecer_nivel(int error, int *lifes){
   modo=1; 
  }
 }
-	return vidas;
+	return 0;
 }
 
 int listar_historial(){}
