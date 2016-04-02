@@ -5,8 +5,18 @@
 #include <time.h>
 #include <string.h>
 
-void partida_normal(int oportunidades){
+void partida_normal(int oportunidades, char codigo[4]){
   
+  void escrituratxt(int iteraciones, float puntuacion) { //Oye moi, esto se supone que lo hice para despues de meter en el txt los datos de la partida, guardase el numero de veces que te pidio el numero y la nota que te da el programa. lo llamaría desde void felicitaciones y void derrota, pero me da error al compilar. mira a ver si ves que hago mal pls. Tambien tengo unos warnings en los fprintf, a ver si tu sabes porque son...
+	
+     FILE *txt1;
+    txt1=fopen("partidas.txt","a+"); //ESCRITURA EN FICHERO DE LAS APUESTAS Y ACIERTOS.
+    fprintf(txt1,"Intentos: %i\n",iteraciones);
+    //fprintf(txt1,"\n");
+    fprintf(txt1,"Puntos: %.2f\n",puntuacion);
+    //fprintf(txt1,"\n");
+    fclose(txt1);
+} 
 
   void felicitaciones(int intentos, char codigo[4], int indice1){
   
@@ -21,7 +31,14 @@ void partida_normal(int oportunidades){
     for(indice1=0; indice1<4; indice1++){
       printf("%c", codigo[indice1]);
     }
+    if(intentos!=1){
     printf(") en %i intentos\nHa obtenido %.2f puntos\n\n", intentos, puntos);
+	escrituratxt(intentos, puntos);
+    }
+    else{ 
+	printf(") en %i intento\nHa obtenido %.2f puntos\n\n", intentos, puntos);
+	escrituratxt(intentos, puntos);
+	}
   }
 
   void derrota(char codigo[4], int indice1, int intentos){
@@ -33,20 +50,29 @@ void partida_normal(int oportunidades){
     for(indice1=0; indice1<4; indice1++){
       printf("%c", codigo[indice1]);
     }
-    printf(") en %i intentos\nHa obtenido %.2f puntos\n\n", intentos, puntos);
+    if(intentos!=1){
+    printf(") tras %i intentos\nHa obtenido %.2f puntos\n\n", intentos, puntos);
+	escrituratxt(intentos, puntos);
+    }
+    else{
+    printf(") tras %i intento\nHa obtenido %.2f puntos\n\n", intentos, puntos);
+	escrituratxt(intentos, puntos);
+	}
   }
 
   srand(time(NULL));
-  char codigo[4];
+  //char codigo[4];
   char apuesta[4];
   char apuesta_c[4];
+  char apuesta_final[4];
   int indice1, indice2, error, a, b, perder;
-  FILE txt;
-  int atempt=oportunidades;
   int ganar=0;
   int intentos=0;
+  int contimpresion=0; //CONTADOR AUX PARA NUMERO DE VALORES DISTINTOS DE _ 
+  FILE *txt;
+
   //GENERAMOS LOS CUATRO NUMEROS ALEATORIOS
-   do{
+   /*do{
      error=0;
      for(indice1=0; indice1<4; indice1++){
      *(codigo+indice1) = '0'+(rand() % (':'-'0'));//NUMEROS ALEATORIOS ENTRE 0 Y 9
@@ -65,10 +91,19 @@ void partida_normal(int oportunidades){
      }
      if(error==1)break;
      }
-     }while(error==1);
+     }while(error==1);*/
   /* for(indice=0; indice<4; indice++){
      printf(" %i", *(codigo+indice));
      }*/
+
+    txt=fopen("partidas.txt","a+"); //GUARDADO EN FICHERO DEL CODIGO SECRETO Y COLOCACIÓN DE GUIONES.
+    fprintf(txt,"------------\n");
+fprintf(txt, "El codigo secreto es:");
+    for(indice1=0; indice1<4; indice1++){
+    fprintf(txt,"%c",codigo[indice1]);
+    }
+    fprintf(txt,"\n");
+    fclose(txt);
 
   //YA TENEMOS CREADO EL CODIGO SECRETO
   do{
@@ -158,17 +193,52 @@ void partida_normal(int oportunidades){
       }
     }
 
+   for(indice1=0; indice1<4; indice1++){ //IMPRESION DE LOS CARACTERES DE SALIDA.
+		if(apuesta_c[indice1]=='*'){
+		printf("%c", apuesta_c[indice1]);
+		apuesta_final[contimpresion]='*';
+		contimpresion++;
+		} }
+		
+	   for(indice1=0; indice1<4; indice1++) {
+		if(apuesta_c[indice1]=='|')	{
+		printf("%c", apuesta_c[indice1]);
+		apuesta_final[contimpresion]='|';
+		contimpresion++;
+		} }
+		
+		for(indice1=0; indice1<(4-contimpresion); indice1++) {
+			printf("_");
+			apuesta_final[indice1+contimpresion]='_';
+    }
+    contimpresion=0; //Ponemos contador a 0 para la siguiente ejecución de la impresión de salida.
+    printf(">"); //ACABAMOS DE COMPROBAR LA APUESTA CON EL CODIGO
+    oportunidades--;    //QUITAMOS UN INTENTO
+    printf(" Quedan %i", oportunidades); 
+    intentos++;
+    
+      txt=fopen("partidas.txt","a+"); //ESCRITURA EN FICHERO DE LAS APUESTAS Y ACIERTOS.
     for(indice1=0; indice1<4; indice1++){
+    fprintf(txt,"%c", apuesta[indice1]);
+    }
+    fprintf(txt,"  <");
+     for(indice1=0; indice1<4; indice1++){
+        fprintf(txt, "%c", apuesta_final[indice1]);
+    }
+    fprintf(txt,">  \n");
+    fclose(txt);
+
+   /* for(indice1=0; indice1<4; indice1++){
       printf("%c", apuesta_c[indice1]);
     }
     printf(">"); //ACABAMOS DE COMPROBAR LA APUESTA CON EL CODIGO
   
     //QUITAMOS UN INTENTO
     oportunidades--;
-    printf("%i", atempt);
-    intentos++;
+    printf("%i", oportunidades);
+    intentos++;*/
     
-    if(atempt==0)perder=1; //PIERDE LA PARTIDA
+    if(oportunidades==0)perder=1; //PIERDE LA PARTIDA
 
     for(indice1=0; indice1<4; indice1++){ //COMPROBAMOS SI TODOS SON ASTERISCOS*
       if(apuesta_c[indice1]=='*')ganar=ganar+1;

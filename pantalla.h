@@ -97,14 +97,13 @@ fprintf(stdout," 1) Jugar partida \n 2) Jugar partida de prueba \n 3) Establecer
   case PROBAR: {
     fprintf(stdout," \nHas seleccionado Jugar partida de prueba\n\n");
     dificultad=1;
-   // jugar_partida(dificultad);
+    jugar_partida(dificultad, lives);
     break;
   }
   case NIVEL: {
     fprintf(stdout," \nHas seleccionado establecer nivel de dificultad\n\n");
     error=1;
     lives=&x;
-	printf("%i",*lives);
     establecer_nivel(error, lives); //MODIFICAMOS EL NUMERO DE OPORTUNIDADES Y VOLVEMOS A LANZAR EL MENU DE OPCIONES
     
     break;
