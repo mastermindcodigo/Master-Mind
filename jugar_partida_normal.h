@@ -11,11 +11,15 @@ void partida_normal(int oportunidades, char codigo[4]){
 	
      FILE *txt1;
     txt1=fopen("partidas.txt","a+"); //ESCRITURA EN FICHERO DE LAS APUESTAS Y ACIERTOS.
-    fprintf(txt1,"Intentos: %i\n",iteraciones);
+       if (txt1 == NULL){
+      printf("\nNo puedo escribir en el fichero del historial");
+    } else {
+    fprintf(txt1,"%i\n",iteraciones);
     //fprintf(txt1,"\n");
-    fprintf(txt1,"Puntos: %.2f\n",puntuacion);
+    fprintf(txt1,"%.2f\n",puntuacion);
     //fprintf(txt1,"\n");
     fclose(txt1);
+	}	
 } 
 
   void felicitaciones(int intentos, char codigo[4], int indice1){
@@ -97,13 +101,17 @@ void partida_normal(int oportunidades, char codigo[4]){
      }*/
 
     txt=fopen("partidas.txt","a+"); //GUARDADO EN FICHERO DEL CODIGO SECRETO Y COLOCACIÓN DE GUIONES.
-    fprintf(txt,"------------\n");
-fprintf(txt, "El codigo secreto es:");
-    for(indice1=0; indice1<4; indice1++){
-    fprintf(txt,"%c",codigo[indice1]);
-    }
+      if (txt == NULL){
+		printf("\nNo puedo escribir en el fichero del historial");
+	} else {
+		fprintf(txt,"------------\n");
+		for(indice1=0; indice1<4; indice1++){
+		fprintf(txt,"%c",codigo[indice1]);
+		}
+	
     fprintf(txt,"\n");
     fclose(txt);
+	}
 
   //YA TENEMOS CREADO EL CODIGO SECRETO
   do{
@@ -218,15 +226,19 @@ fprintf(txt, "El codigo secreto es:");
     intentos++;
     
       txt=fopen("partidas.txt","a+"); //ESCRITURA EN FICHERO DE LAS APUESTAS Y ACIERTOS.
-    for(indice1=0; indice1<4; indice1++){
-    fprintf(txt,"%c", apuesta[indice1]);
-    }
-    fprintf(txt,"  <");
-     for(indice1=0; indice1<4; indice1++){
-        fprintf(txt, "%c", apuesta_final[indice1]);
-    }
-    fprintf(txt,">  \n");
-    fclose(txt);
+             if (txt == NULL){
+      printf("\nNo puedo escribir en el fichero del historial");
+    } else {
+		for(indice1=0; indice1<4; indice1++){
+		fprintf(txt,"%c", apuesta[indice1]);
+		}
+		fprintf(txt,"  <");
+		for(indice1=0; indice1<4; indice1++){
+			fprintf(txt, "%c", apuesta_final[indice1]);
+		}
+		fprintf(txt,">  \n");
+		fclose(txt);
+	}
 
    /* for(indice1=0; indice1<4; indice1++){
       printf("%c", apuesta_c[indice1]);

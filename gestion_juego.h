@@ -72,5 +72,18 @@ int establecer_nivel(int error, int *lifes){
 	return 0;
 }
 
-int listar_historial(){}
+int listar_historial(){
+	FILE *txt;
+	char c;
+	txt=fopen("partidas.txt","r");
+	if( txt == NULL) {
+		printf("No puedo leer el fichero del historial\n");
+		return 0;
+	}
+	    while((c=fgetc(txt))!=EOF){ //Comparamos con fin de fichero.
+        printf("%c",c);
+    }
+    fclose(txt);
+	return 0;
+	}
 

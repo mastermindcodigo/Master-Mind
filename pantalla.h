@@ -110,6 +110,7 @@ fprintf(stdout," 1) Jugar partida \n 2) Jugar partida de prueba \n 3) Establecer
   }
   case LISTAR: {
     fprintf(stdout,"\nHas seleccionado listar historial de partidas\n\n");
+    listar_historial();
     break;
   }
   default : {
