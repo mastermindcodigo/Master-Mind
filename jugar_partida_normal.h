@@ -9,18 +9,14 @@ void partida_normal(int oportunidades, char codigo[4]){
   
   void escrituratxt(int iteraciones, float puntuacion) { //Oye moi, esto se supone que lo hice para despues de meter en el txt los datos de la partida, guardase el numero de veces que te pidio el numero y la nota que te da el programa. lo llamaría desde void felicitaciones y void derrota, pero me da error al compilar. mira a ver si ves que hago mal pls. Tambien tengo unos warnings en los fprintf, a ver si tu sabes porque son...
 	
-     FILE *txt1;
+    FILE *txt1;
     txt1=fopen("partidas.txt","a+"); //ESCRITURA EN FICHERO DE LAS APUESTAS Y ACIERTOS.
-       if (txt1 == NULL){
-      printf("\nNo puedo escribir en el fichero del historial");
-    } else {
-    fprintf(txt1,"%i\n",iteraciones);
+    fprintf(txt1,"Intentos: %i\n",iteraciones);
     //fprintf(txt1,"\n");
-    fprintf(txt1,"%.2f\n",puntuacion);
+    fprintf(txt1,"Puntos: %.2f\n",puntuacion);
     //fprintf(txt1,"\n");
     fclose(txt1);
-	}	
-} 
+  } 
 
   void felicitaciones(int intentos, char codigo[4], int indice1){
   
@@ -36,13 +32,13 @@ void partida_normal(int oportunidades, char codigo[4]){
       printf("%c", codigo[indice1]);
     }
     if(intentos!=1){
-    printf(") en %i intentos\nHa obtenido %.2f puntos\n\n", intentos, puntos);
-	escrituratxt(intentos, puntos);
+      printf(") en %i intentos\nHa obtenido %.2f puntos\n\n", intentos, puntos);
+      escrituratxt(intentos, puntos);
     }
     else{ 
-	printf(") en %i intento\nHa obtenido %.2f puntos\n\n", intentos, puntos);
-	escrituratxt(intentos, puntos);
-	}
+      printf(") en %i intento\nHa obtenido %.2f puntos\n\n", intentos, puntos);
+      escrituratxt(intentos, puntos);
+    }
   }
 
   void derrota(char codigo[4], int indice1, int intentos){
@@ -55,13 +51,13 @@ void partida_normal(int oportunidades, char codigo[4]){
       printf("%c", codigo[indice1]);
     }
     if(intentos!=1){
-    printf(") tras %i intentos\nHa obtenido %.2f puntos\n\n", intentos, puntos);
-	escrituratxt(intentos, puntos);
+      printf(") tras %i intentos\nHa obtenido %.2f puntos\n\n", intentos, puntos);
+      escrituratxt(intentos, puntos);
     }
     else{
-    printf(") tras %i intento\nHa obtenido %.2f puntos\n\n", intentos, puntos);
-	escrituratxt(intentos, puntos);
-	}
+      printf(") tras %i intento\nHa obtenido %.2f puntos\n\n", intentos, puntos);
+      escrituratxt(intentos, puntos);
+    }
   }
 
   srand(time(NULL));
@@ -76,42 +72,38 @@ void partida_normal(int oportunidades, char codigo[4]){
   FILE *txt;
 
   //GENERAMOS LOS CUATRO NUMEROS ALEATORIOS
-   /*do{
-     error=0;
-     for(indice1=0; indice1<4; indice1++){
-     *(codigo+indice1) = '0'+(rand() % (':'-'0'));//NUMEROS ALEATORIOS ENTRE 0 Y 9
-     }
-     //COMPROBAMOS QUE NO HAYA DOS ELEMENTOS IGUALES EN EL CODIGO SECRETO
-     for(indice1=0; indice1<5; indice1++){
-     for(indice2=0; indice2<5; indice2++){
-     if(indice1==indice2){
-     continue;
-     }
-     else if(codigo[indice1]==codigo[indice2]){
-     //	  printf("\nLas letras de las posiciones %i y %i son iguales\n\n", indice1+1, indice2 +1);
-     error=1;
-     break;
-     }
-     }
-     if(error==1)break;
-     }
-     }while(error==1);*/
+  /*do{
+    error=0;
+    for(indice1=0; indice1<4; indice1++){
+    *(codigo+indice1) = '0'+(rand() % (':'-'0'));//NUMEROS ALEATORIOS ENTRE 0 Y 9
+    }
+    //COMPROBAMOS QUE NO HAYA DOS ELEMENTOS IGUALES EN EL CODIGO SECRETO
+    for(indice1=0; indice1<5; indice1++){
+    for(indice2=0; indice2<5; indice2++){
+    if(indice1==indice2){
+    continue;
+    }
+    else if(codigo[indice1]==codigo[indice2]){
+    //	  printf("\nLas letras de las posiciones %i y %i son iguales\n\n", indice1+1, indice2 +1);
+    error=1;
+    break;
+    }
+    }
+    if(error==1)break;
+    }
+    }while(error==1);*/
   /* for(indice=0; indice<4; indice++){
      printf(" %i", *(codigo+indice));
      }*/
 
-    txt=fopen("partidas.txt","a+"); //GUARDADO EN FICHERO DEL CODIGO SECRETO Y COLOCACIÓN DE GUIONES.
-      if (txt == NULL){
-		printf("\nNo puedo escribir en el fichero del historial");
-	} else {
-		fprintf(txt,"------------\n");
-		for(indice1=0; indice1<4; indice1++){
-		fprintf(txt,"%c",codigo[indice1]);
-		}
-	
-    fprintf(txt,"\n");
-    fclose(txt);
-	}
+  txt=fopen("partidas.txt","a+"); //GUARDADO EN FICHERO DEL CODIGO SECRETO Y COLOCACIÓN DE GUIONES.
+  fprintf(txt,"------------\n");
+  fprintf(txt, "El codigo secreto es:");
+  for(indice1=0; indice1<4; indice1++){
+    fprintf(txt,"%c",codigo[indice1]);
+  }
+  fprintf(txt,"\n");
+  fclose(txt);
 
   //YA TENEMOS CREADO EL CODIGO SECRETO
   do{
@@ -201,23 +193,23 @@ void partida_normal(int oportunidades, char codigo[4]){
       }
     }
 
-   for(indice1=0; indice1<4; indice1++){ //IMPRESION DE LOS CARACTERES DE SALIDA.
-		if(apuesta_c[indice1]=='*'){
-		printf("%c", apuesta_c[indice1]);
-		apuesta_final[contimpresion]='*';
-		contimpresion++;
-		} }
+    for(indice1=0; indice1<4; indice1++){ //IMPRESION DE LOS CARACTERES DE SALIDA.
+      if(apuesta_c[indice1]=='*'){
+	printf("%c", apuesta_c[indice1]);
+	apuesta_final[contimpresion]='*';
+	contimpresion++;
+      } }
 		
-	   for(indice1=0; indice1<4; indice1++) {
-		if(apuesta_c[indice1]=='|')	{
-		printf("%c", apuesta_c[indice1]);
-		apuesta_final[contimpresion]='|';
-		contimpresion++;
-		} }
+    for(indice1=0; indice1<4; indice1++) {
+      if(apuesta_c[indice1]=='|')	{
+	printf("%c", apuesta_c[indice1]);
+	apuesta_final[contimpresion]='|';
+	contimpresion++;
+      } }
 		
-		for(indice1=0; indice1<(4-contimpresion); indice1++) {
-			printf("_");
-			apuesta_final[indice1+contimpresion]='_';
+    for(indice1=0; indice1<(4-contimpresion); indice1++) {
+      printf("_");
+      apuesta_final[indice1+contimpresion]='_';
     }
     contimpresion=0; //Ponemos contador a 0 para la siguiente ejecución de la impresión de salida.
     printf(">"); //ACABAMOS DE COMPROBAR LA APUESTA CON EL CODIGO
@@ -225,30 +217,26 @@ void partida_normal(int oportunidades, char codigo[4]){
     printf(" Quedan %i", oportunidades); 
     intentos++;
     
-      txt=fopen("partidas.txt","a+"); //ESCRITURA EN FICHERO DE LAS APUESTAS Y ACIERTOS.
-             if (txt == NULL){
-      printf("\nNo puedo escribir en el fichero del historial");
-    } else {
-		for(indice1=0; indice1<4; indice1++){
-		fprintf(txt,"%c", apuesta[indice1]);
-		}
-		fprintf(txt,"  <");
-		for(indice1=0; indice1<4; indice1++){
-			fprintf(txt, "%c", apuesta_final[indice1]);
-		}
-		fprintf(txt,">  \n");
-		fclose(txt);
-	}
-
-   /* for(indice1=0; indice1<4; indice1++){
-      printf("%c", apuesta_c[indice1]);
+    txt=fopen("partidas.txt","a+"); //ESCRITURA EN FICHERO DE LAS APUESTAS Y ACIERTOS.
+    for(indice1=0; indice1<4; indice1++){
+      fprintf(txt,"%c", apuesta[indice1]);
     }
-    printf(">"); //ACABAMOS DE COMPROBAR LA APUESTA CON EL CODIGO
+    fprintf(txt,"  <");
+    for(indice1=0; indice1<4; indice1++){
+      fprintf(txt, "%c", apuesta_final[indice1]);
+    }
+    fprintf(txt,">  \n");
+    fclose(txt);
+
+    /* for(indice1=0; indice1<4; indice1++){
+       printf("%c", apuesta_c[indice1]);
+       }
+       printf(">"); //ACABAMOS DE COMPROBAR LA APUESTA CON EL CODIGO
   
-    //QUITAMOS UN INTENTO
-    oportunidades--;
-    printf("%i", oportunidades);
-    intentos++;*/
+       //QUITAMOS UN INTENTO
+       oportunidades--;
+       printf("%i", oportunidades);
+       intentos++;*/
     
     if(oportunidades==0)perder=1; //PIERDE LA PARTIDA
 
@@ -272,4 +260,4 @@ void partida_normal(int oportunidades, char codigo[4]){
   
   partida_normal();
   return 0;
-}*/
+  }*/
